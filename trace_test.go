@@ -20,10 +20,16 @@ func TestTracing(t *testing.T) {
 	topCtx, top := tracer.Start(context.Background(), "top")
 	requireCurrentEquals(topCtx)
 
-	twoCtx, two := tracer.Start(CurrentContext(), "two")
+	twoCtx, two := tracer.Start(topCtx, "two")
 	requireCurrentEquals(twoCtx)
 
-	threeCtx, three := tracer.Continue("three")
+	threeCtx, three := tracer.Start(CurrentContext(), "three")
+	requireCurrentEquals(threeCtx)
+
+	fourCtx, four := tracer.Continue("four")
+	requireCurrentEquals(fourCtx)
+
+	four.End()
 	requireCurrentEquals(threeCtx)
 
 	three.End()

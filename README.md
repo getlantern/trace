@@ -7,9 +7,12 @@ This library is inspired by https://github.com/tylerb/gls and https://github.com
 ```go
 topCtx, top := tracer.Start(context.Background(), "top")
 
-// Two will be a child span of top
-twoCtx, two := tracer.Start(CurrentContext(), "two")
+// two will be a child span of top
+_, two := tracer.Start(topCtx, "two")
 
-// Three will be a child span of two
-threeCtx, three := tracer.Continue("three")
+// three will be a chlid span of two
+_, three := tracer.Start(CurrentContext(), "three")
+
+// four will be a child span of three
+_, four := tracer.Continue("four")
 ```
