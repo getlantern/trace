@@ -11,7 +11,7 @@ topCtx, top := tracer.Start(context.Background(), "top")
 _, two := tracer.Start(topCtx, "two")
 
 // three will be a chlid span of two
-_, three := tracer.Start(CurrentContext(), "three")
+_, three := tracer.Start(trace.CurrentContext(), "three")
 
 // four will be a child span of three
 _, four := tracer.Continue("four")
